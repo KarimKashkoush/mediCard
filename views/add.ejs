@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة مستخدم جديد</title>
+    <!-- Css -->
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <section class="header">
+        <section class="container" style="display: block; text-align: center;">
+            <section class="logo">
+                <a href="/">
+                    الهوية الطبية
+                </a>
+            </section>
+        </section>
+    </section>
+
+    <!-- main -->
+    <main>
+        <!-- Add Studetn -->
+        <section class="add">
+            <section class="container">
+
+                <section class="section-header">
+                    <h2>
+                        <i class="fas fa-user-plus"></i>
+                        إضافة مستخدم جديد
+                    </h2>
+                </section>
+
+                <form action="/add" method="post" id="addForm" enctype="multipart/form-data">
+                    <section class="input-section">
+                        <label for="inputName" class="form-label">الاسم</label>
+                        <input placeholder="الاسم" type="text" class="form-control" id="inputName" name="fullName" />
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="nationalityId" class="form-label">الرقم القومي</label>
+                        <input placeholder="الرقم القومي" type="text" class="form-control" id="nationalityId"
+                            name="nationalityId" />
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section birthday">
+                        <label for="birthday">تاريخ الميلاد</label>
+                        <section class="inputs">
+                            <input type="text" placeholder="اليوم" id="day" onchange="birthdayFun()">
+                            <input type="text" placeholder="الشهر" id="month" onchange="birthdayFun()">
+                            <input type="text" placeholder="السنة" id="year" onchange="birthdayFun()">
+                        </section>
+                        <input type="text" id="birthday" name="birthday" style="display: none;">
+                    </section>
+
+                    <section class="input-section">
+                        <label for="inputtele" class="form-label">رقم الهاتف</label>
+                        <input placeholder="رقم الهاتف" name="tele" type="number" class="form-control" id="inputtele" />
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="emergencyNumber1">رقم الطوارئ الأول</label>
+                        <input placeholder="رقم الهاتف" name="emergencyNumber1" type="number" class="form-control"
+                            id="inputtele">
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="emergencyNumber2">رقم الطوارئ الثاني</label>
+                        <input placeholder="رقم الهاتف" name="emergencyNumber2" type="number" class="form-control"
+                            id="inputtele">
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="inputCountry" class="form-label">
+                            العنوان
+                        </label>
+                        <input placeholder="العنوان" type="text" name="Country" class="form-control"
+                            id="inputCountry" />
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="inputemail" class="form-label">الايميل الشخصي</label>
+                        <input placeholder="الايميل الشخصي" name="email" type="email" class="form-control"
+                            id="inputemail" />
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="job4" class="form-label">الوظيفة أو المهنة</label>
+                        <input placeholder="الوظيفة أو المهنة" type="text" name="job" class="form-control" id="job4" />
+                        <span class="error"></span>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="image">الصورة الشخصية</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                    </section>
+
+                    <section class="input-section">
+                        <label for="blood" class="form-label">فصيلة الدم</label>
+                        <select id="blood" name="blood" class="form-control">
+                            <option value="">غير معروفة</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </section>
+
+                    <section class="input-section">
+                        <label for="healthy" class="form-label">هل يوجد أمراض مزمنة ؟</label>
+                        <select id="healthy" class="form-control" onchange="healthyChange()">
+                            <option value="" selected>اختر...</option>
+                            <option value="لا يوجد">لا يوجد</option>
+                            <option value="نعم">نعم</option>
+                        </select>
+                        <br>
+                        <input placeholder="سكر، ضغط، ..." type="text" class="form-control" id="healthyInput"
+                            name="healthy" style="display: none;" />
+                        <span class="error"></span>
+                    </section>
+
+                    <button type="submit" class="btn">حفظ <i class="fa-solid fa-cloud-arrow-up"></i></button>
+                </form>
+            </section>
+        </section>
+        <!-- Add Studetn -->
+    </main>
+    <!-- main -->
+
+
+    <script src="/js/script.js"></script>
+    <script src="/js/all.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد</title>
+    <!-- Css -->
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+
+    <section class="header">
+        <section class="container" style="display: block; text-align: center;">
+            <section class="logo">
+                <a href="/">
+                    الهوية الطبية
+                </a>
+            </section>
+        </section>
+    </section>
+    <section class="form-register">
+        <section class="container">
+            <form action="/signup" method="POST">
+                <section class="input-section">
+                    <input type="text" class="personalName" id="personalName" name="personalName" placeholder="الاسم">
+                </section>
+                <section class="input-section">
+                    <select name="role" id="role" class="role">
+                        <option value="">اختر الوظيفة</option>
+                        <option value="users">مستخدم بطاقة</option>
+                        <option value="doctor">دكتور</option>
+                        <option value="Laboratory">معمل تحاليل</option>
+                        <option value="radiology">مركز آشعة</option>
+                        <option value="Pharmacy">صيدلية</option>
+                    </select>
+                </section>
+                <section class="input-section">
+                    <input type="email" name="email" id="email" placeholder="الايميل الشخصي">
+                </section>
+                <section class="input-section">
+                    <input type="password" name="password" id="password" placeholder="كلمة المرور">
+                </section>
+
+                <button type="submit" class="btn">إنشاء حساب</button>
+                <a href="/">هل لديك حساب ؟ قم بتسجبل الدخول</a>
+            </form>
+        </section>
+    </section>
+</body>
+
+</html>

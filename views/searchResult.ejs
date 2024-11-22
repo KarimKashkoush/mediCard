@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <section class="header">
+        <section class="container" style="display: block; text-align: center;">
+            <section class="logo">
+                <a href="/">
+                    الهوية الطبية
+                </a>
+            </section>
+        </section>
+    </section>
+
+    <section class="doctor-main">
+        <section class="container">
+            <section class="table">
+                <table class="main-table">
+
+                    <thead>
+                        <tr>
+                            <th>م</th>
+                            <th>الاسم</th>
+                            <th>الرقم القومي</th>
+                            <th>العمر</th>
+                            <% if (role==='doctor' ) { %>
+                                <th>إضافة جديدة</th>
+                                <% } %>
+                                    <th>السجل الطبي</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% if (result.length===0) { %>
+                            <tr>
+                                <td colspan="5" style="text-align: center;">لا يوجد نتائج</td>
+                            </tr>
+                            <% } else { %>
+                                <% result.forEach((element, index)=> { %>
+                                    <tr>
+                                        <th>
+                                            <%= index + 1 %>
+                                        </th>
+                                        <td>
+                                            <%= element.fullName %>
+                                        </td>
+                                        <td>
+                                            <%= element.nationalityId %>
+                                        </td>
+                                        <td>
+                                            <%= moment().diff(element.birthday, 'years' ) %>
+                                        </td>
+                                        <% if (role==='doctor') { %>
+                                            <td>
+                                                <div class="reports" id="reports-<%= element._id %>">
+                                                    <div class="reports-content">
+                                                        <span class="close" data-id="<%= element._id %>">&times;</span>
+                                                        <form class="reportForms"
+                                                            action="/reports/<%= element._id %>/report" method="POST">
+                                                            <section class="text">
+                                                                <label for="report">التقرير الطبي:</label>
+                                                                <textarea name="report" id="report"
+                                                                    dir="auto"></textarea>
+                                                            </section>
+                                                            <section class="text">
+                                                                <label for="rays">طلب آشعة:</label>
+                                                                <textarea name="rays" id="rays" dir="auto"></textarea>
+                                                            </section>
+                                                            <section class="text">
+                                                                <label for="analysis">طلب تحاليل:</label>
+                                                                <textarea name="analysis" id="analysis"
+                                                                    dir="auto"></textarea>
+                                                            </section>
+                                                            <section class="text">
+                                                                <label for="Prescription">الوصفة الطبية:</label>
+                                                                <textarea name="Prescription" id="Prescription"
+                                                                    dir="auto"></textarea>
+                                                            </section>
+                                                            <section class="text" style="display: none;">
+                                                                <input type="text" value='<%= personalName %>'
+                                                                    name="doctorName">
+                                                            </section>
+                                                            <button type="submit" class="btn">إرسال</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <button class="btn view add-report" data-id="<%= element._id %>">
+                                                    إضافة
+                                                </button>
+                                            </td>
+                                            <% } %>
+                                                <td>
+                                                    <button class="btn view" id="openForm">
+                                                        <a href="/user/<%= element._id %>">عرض</a>
+                                                    </button>
+                                                </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } %>
+                    </tbody>
+
+                </table>
+            </section>
+
+        </section>
+    </section>
+
+
+    <script>
+        function confirmDelete() {
+            return confirm("هل أنت متأكد من حذف المستخدم؟");
+        }
+
+        document.querySelectorAll('.open-modal').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                document.getElementById('modal-' + id).style.display = 'block';
+            });
+        });
+
+        document.querySelectorAll('.close').forEach(span => {
+            span.addEventListener('click', () => {
+                const id = span.getAttribute('data-id');
+                document.getElementById('modal-' + id).style.display = 'none';
+            });
+        });
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+
+        document.querySelectorAll('.add-report').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                document.getElementById('reports-' + id).style.display = 'block';
+            });
+        });
+
+        document.querySelectorAll('.close').forEach(span => {
+            span.addEventListener('click', () => {
+                const id = span.getAttribute('data-id');
+                document.getElementById('reports-' + id).style.display = 'none';
+            });
+        });
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('reports')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

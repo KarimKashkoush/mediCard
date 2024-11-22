@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/all.css">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+
+<body>
+    <section class="header">
+        <section class="container">
+            <section class="logo">
+                <a href="/">
+                    الهوية الطبية
+                </a>
+            </section>
+
+            <button onclick="openCloseNavbar()"><i class="fa-solid fa-bars" id="iconNav"></i></button>
+
+            <nav id="navbar">
+                <ul>
+                    <% if (isLoggedIn) { %>
+                        <li>
+                            <%= personalName %>
+                        </li>
+                        <li><a href="/logout" class="logout">تسجيل الخروج</a></li>
+                        <% } else { %>
+                            <li><a href="/login">تسجيل الدخول</a></li>
+                            <li><a href="/signup">إنشاء حساب</a></li>
+                            <% } %>
+                </ul>
+            </nav>
+        </section>
+    </section>
+
+    <section class="landing">
+        <section class="container">
+            <section class="content">
+                <h2>الهوية الطبية</h2>
+                <p>الهوية الصحية هي بطاقة ذكية تحتوي على البيانات الطبية للمستخدم، تُعرف بالهوية الطبية. تشتمل هذه
+                    البطاقة على السجل الطبي الخاص بالمستخدم، بما في ذلك الأمراض المزمنة، التقارير الطبية، نتائج الأشعة
+                    والتحاليل، والأدوية الموصوفة، مما يتيح للأطباء ومقدمي الرعاية الصحية الوصول السريع والآمن إلى
+                    معلوماته الصحية.</p>
+                <a href="/add">الاشتراك في الخدمة</a>
+                <section class="title">
+                    <p>البحث عن مستخدم بااستخدام الرقم القومي الخص به</p>
+                    <form class="search-user" action="/searchResult" method="post" role="search">
+                        <input type="text" placeholder="الرقم القومي" name="searchValue">
+                        <button class="search-btn" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </section>
+            </section>
+            <lottie-player src="https://lottie.host/3bd665e0-6a3c-42a5-b83a-2a34725a4469/UM4njWYmAz.json"
+                background="transparent" speed="1" loop autoplay class="home-animation"></lottie-player>
+        </section>
+    </section>
+
+    <section class="about">
+        <section class="container">
+            <section class="about-header section-header">
+                <h2>
+                    ماهي البطاقة الصحية
+                </h2>
+            </section>
+            <section class="about-content">
+                <section class="boxs">
+                    <section class="box">
+                        <section class="image">
+                            <img src="images/id-card.png" alt="">
+                        </section>
+                        <section class="title">
+                            <p>البطاقة الصحية هي بطاقة ذكية تتضمن البيانات الطبية للمستخدم، أو ما يُعرف بالهوية الطبية.
+                                تحتوي البطاقة على السجل الطبي الخاص به، بما يشمل الأمراض المزمنة، التقارير الطبية، نتائج
+                                الأشعة والتحاليل، والأدوية الموصوفة، مما يسهل الوصول السريع والآمن للمعلومات الصحية
+                                الضرورية.</p>
+                        </section>
+                    </section>
+                    <section class="box">
+                        <section class="image">
+                            <img src="images/nfc.png" alt="">
+                        </section>
+                        <section class="title">
+                            <p>تتميز بدعم تقنية NFC. تتيح هذه التقنية للمستخدمين والأطباء الوصول السريع إلى السجل المرضي
+                            </p>
+                        </section>
+                    </section>
+                    <section class="box">
+                        <section class="image">
+                            <img src="images/diagnosis.png" alt="">
+                        </section>
+                        <section class="title">
+                            <p>تشمل كافة البيانات الطبية لصاحبها، بما في ذلك جميع الأشعة والتحاليل الخاصة به، إضافةً إلى
+                                السجل المرضي، الأمراض المزمنة، والتقارير الطبية</p>
+                        </section>
+                    </section>
+                    <section class="box">
+                        <section class="image">
+                            <img src="images/find-user.png" alt="">
+                        </section>
+                        <section class="title">
+                            <p>البحث عن مستخدم باستخدام الرقم القومي الخص به</p>
+                            <form class="search-user" action="/searchResult" method="post" role="search">
+                                <input type="text" placeholder="الرقم القومي" name="searchValue">
+                                <button class="search-btn" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </form>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+
+    <section class="whos-user">
+        <section class="container">
+            <section class="section-header">
+                <h2>المستخدمين</h2>
+            </section>
+
+            <section class="content">
+                <section class="box">
+                    <img src="images/whos-users.png" alt="users">
+                    <h2>المستخدمين</h2>
+                    <p>المستخمدين الذين يرغبون في حفظ الهوية الطبية الخاصة بهم والرجوع لها عند الحاجة</p>
+                </section>
+
+                <section class="box">
+                    <img src="images/whos-doctor.png" alt="doctor">
+                    <h2>دكتور</h2>
+                    <p>يقوم الدكتور بتسجيل التقرير الطبي والاشعة والتحاليل والأدوية للمريض لحفظها فيالسجل الطبي الخاص به
+                    </p>
+                </section>
+
+                <section class="box">
+                    <img src="images/whos-radiology.png" alt="radiology">
+                    <h2>قسم الآشعة</h2>
+                    <p>يقوم قسم الآشعة بقرآة الآشعة المسجلة من قبل الدكتور وتنفيذها ومن حفظها في السجل الطبي للمريض</p>
+                </section>
+
+                <section class="box">
+                    <img src="images/whos-chemical-analysis.png" alt="chemical-analysis">
+                    <h2>معمل التحاليل</h2>
+                    <p>يقوم معل التحاليل بقرآة التحاليل المسجلة من قبل الدكتور وتنفيذها ومن ثم تسجيل النتيجة في السجل
+                        الطبي للمريض</p>
+                </section>
+
+                <section class="box">
+                    <img src="images/whos-medicine.png" alt="medicine">
+                    <h2>الصيدلية</h2>
+                    <p>تقوم الصيدلية بصرف الأدوية المسجلة من قبل الدكتور في السجل الطبي الخاص بالمريض</p>
+                </section>
+            </section>
+        </section>
+    </section>
+    <script src="js/all.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

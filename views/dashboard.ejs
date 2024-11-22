@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <section class="header">
+        <section class="container" style="display: block; text-align: center;">
+            <section class="logo">
+                <a href="/">
+                    الهوية الطبية
+                </a>
+            </section>
+        </section>
+    </section>
+
+    <section class="dashboard">
+        <section class="container">
+            <section class="table">
+                <table class="main-table">
+
+                    <thead>
+                        <tr>
+                            <th>م</th>
+                            <th>الاسم</th>
+                            <th>الرقم القومي</th>
+                            <th>العمر</th>
+                            <th>السجل الطبي</th>
+                            <th>حذف</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% result.forEach((element, index)=> { %>
+                            <tr>
+                                <th>
+                                    <%= index + 1 %>
+                                </th>
+                                <td>
+                                    <%= element.fullName %>
+                                </td>
+                                <td>
+                                    <%= element.nationalityId %>
+                                </td>
+                                <td>
+                                    <%= moment().diff( element.birthday , 'years' ) %>
+                                </td>
+                                <td>
+                                    <button class="btn view" id="openForm">
+                                        <a href="/user/<%= element._id %>">
+                                            عرض
+                                        </a>
+                                    </button>
+                                </td>
+                                <td>
+                                    <form action="/<%= element._id %>?_method=DELETE" method="post"
+                                        onsubmit="return confirmDelete()">
+                                        <button class="btn delete" id="openForm">
+                                            حذف
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+
+                </table>
+            </section>
+        </section>
+    </section>
+
+
+    <script>
+        function confirmDelete() {
+            return confirm("هل أنت متأكد من حذف المستخدم؟");
+        }
+    </script>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
