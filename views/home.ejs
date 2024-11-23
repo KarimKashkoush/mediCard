@@ -7,8 +7,8 @@
     <title>
         <%= title %>
     </title>
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/all.css">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/all.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
@@ -26,13 +26,14 @@
             <nav id="navbar">
                 <ul>
                     <% if (isLoggedIn) { %>
-                        <li>
-                            <%= personalName %>
-                        </li>
-                        <li><a href="/logout" class="logout">تسجيل الخروج</a></li>
+                        <li><a href="/add">الاشتراك في الخدمة</a></li>
+                        <li><a href="/logout" class="logout">
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                <%= personalName %>
+                            </a></li>
                         <% } else { %>
-                            <li><a href="/login">تسجيل الدخول</a></li>
-                            <li><a href="/signup">إنشاء حساب</a></li>
+                            <li><a href="/add">الاشتراك في الخدمة</a></li>
+                            <li><a href="/login" class="login">تسجيل الدخول</a></li>
                             <% } %>
                 </ul>
             </nav>

@@ -89,10 +89,8 @@ const addMongo = (req, res) => {
             } else {
                 let dataInBody = req.body;
 
-                // إنشاء الرابط الكامل للصورة
-                const imageLink = `${req.file ? req.file.filename : 'default.jpg'}`;
+                const imageLink = req.file ? req.file.filename : 'default.jpg';
 
-                // تعيين الرابط الكامل للصورة في البيانات
                 dataInBody.image = imageLink;
 
                 const data = new User(dataInBody);
@@ -100,26 +98,34 @@ const addMongo = (req, res) => {
                     .then(() => {
                         res.send(`
                             <script>
-                                alert('تم التسجيل بنجاح!');
+                                alert('تم التسجيل بنجاح! شكرًا لتسجيلك.');
                                 setTimeout(function() {
-                                    window.location.href = '/add'; // إعادة توجيه إلى الصفحة بعد التنبيه
-                                }, 1000); // تأخير لمدة ثانية واحدة قبل إعادة التوجيه
+                                    window.location.href = '/'; // إعادة توجيه المستخدم إلى الصفحة الرئيسية
+                                }, 2000); // تأخير لمدة ثانيتين قبل إعادة التوجيه
                             </script>
                         `);
                     })
                     .catch(err => {
-                        console.log(err);
-                        res.status(500).send('حدث خطأ ما.');
+                        console.error(err);
+                        res.status(500).send(`
+                            <script>
+                                alert('حدث خطأ أثناء حفظ البيانات. الرجاء المحاولة مرة أخرى.');
+                                window.history.back();
+                            </script>
+                        `);
                     });
             }
         })
         .catch(err => {
-            console.log(err);
-            res.status(500).send('حدث خطأ ما.');
+            console.error(err);
+            res.status(500).send(`
+                <script>
+                    alert('حدث خطأ أثناء التحقق من البيانات. الرجاء المحاولة لاحقًا.');
+                    window.history.back();
+                </script>
+            `);
         });
 };
-
-
 
 // عرض بيانات الشخص الواحد فقط
 const view = (req, res) => {

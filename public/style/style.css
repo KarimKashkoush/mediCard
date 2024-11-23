@@ -206,7 +206,7 @@ button {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding-block: 50px;
+    padding-block: 100px 50px;
 }
 
 .add .container {
@@ -238,6 +238,10 @@ button {
     select {
         width: 100%;
         border: 1px solid var(--sub-color);
+
+        &:focus {
+            border-color: var(--main-color);
+        }
     }
 
     button {
@@ -428,8 +432,11 @@ button {
     display: flex;
     flex-direction: column;
 
-    >section:not(.prescription) {
+    >section {
         padding-block: 15px;
+    }
+
+    >section:not(.prescription) {
         border-bottom: 1px solid;
     }
 }
@@ -608,10 +615,20 @@ button {
     transition: var(--transition-3);
 }
 
-.logout {
+.logout,
+.login {
     background-color: #d65046;
     display: block;
     padding: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 3px;
+
+    svg {
+        width: 25px;
+        height: 25px;
+    }
 }
 
 @media (max-width:786px) {
@@ -627,17 +644,19 @@ button {
         background-color: #85822865;
         width: 220px;
         height: calc(100vh - 59.7px);
-        padding-inline: 10px;
         backdrop-filter: blur(3px);
         transition: var(--transition-3);
 
         ul {
             flex-direction: column;
-            justify-content: start;
             align-items: start;
 
-            li a {
-                padding: 0;
+            li {
+                width: 100%;
+
+                a {
+                    padding: 10px;
+                }
             }
         }
     }

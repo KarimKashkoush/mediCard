@@ -1,10 +1,10 @@
 const ensureRole = (requiredRole) => {
     return (req, res, next) => {
         if (req.session && req.session.role === requiredRole) {
-            req.personalName = req.session.personalName; // إضافة اسم المستخدم إلى الطلب
-            return next(); // السماح بالوصول إلى الصفحة المطلوبة
+            req.personalName = req.session.personalName;
+            return next();
         } else {
-            return res.redirect('/'); // توجيه المستخدم إلى الصفحة الرئيسية إذا لم يكن له الدور المطلوب
+            return res.redirect('/');
         }
     };
 };
@@ -14,5 +14,6 @@ module.exports = {
     ensureLaboratoryRole: ensureRole('Laboratory'),
     ensureRadiologyRole: ensureRole('radiology'),
     ensurePharmacyRole: ensureRole('Pharmacy'),
-    ensureUserRole: ensureRole('users')
+    ensureUserRole: ensureRole('users'),
+    ensureDashboardRole: ensureRole('dashboard')
 };
