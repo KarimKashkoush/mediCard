@@ -156,13 +156,19 @@
                         <br>
                         <section class="results">
                             <% if (element.radiologyResults && element.radiologyResults.length> 0) { %>
-                                <% element.radiologyResults.forEach(function(image) { %>
-                                    <img src="/results/<%= image %>" alt="نتيجة الآشعة" class="thumbnail" />
+                                <% element.radiologyResults.forEach(function(image, index) { %>
+                                    <div class="image-container">
+                                        <img src="/results/<%= image %>" alt="نتيجة الآشعة" class="thumbnail" />
+                                        <span class="image-number">
+                                            <%= index + 1 %>
+                                        </span>
+                                    </div>
                                     <% }); %>
                                         <% } else { %>
                                             <p>لا يوجد نتائج حتى الآن</p>
                                             <% } %>
                         </section>
+
 
                         <% if (role !=='users' ) { %>
                             <% if (role=='radiology' ) { %>
@@ -187,8 +193,13 @@
                         <br>
                         <section class="results">
                             <% if (element.analysisResults && element.analysisResults.length> 0) { %>
-                                <% element.analysisResults.forEach(function(image) { %>
-                                    <img src="/results/<%= image %>" alt="نتيجة تحليل" class="thumbnail" />
+                                <% element.analysisResults.forEach(function(image, index) { %>
+                                    <div class="image-container">
+                                        <img src="/results/<%= image %>" alt="نتيجة تحليل" class="thumbnail" />
+                                        <span class="image-number">
+                                            <%= index + 1 %>
+                                        </span>
+                                    </div>
                                     <% }); %>
                                         <% } else { %>
                                             <p>لا يوجد نتائج حتى الآن</p>

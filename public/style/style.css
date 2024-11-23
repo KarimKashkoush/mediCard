@@ -435,6 +435,45 @@ button {
     >section {
         padding-block: 15px;
 
+        .image-container {
+            position: relative;
+            /* لجعل العنصر الفرعي يتمركز بشكل صحيح */
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .thumbnail {
+            display: block;
+            width: 100px;
+            /* أو أي حجم يناسبك */
+            height: auto;
+        }
+
+        .image-number {
+            position: absolute;
+            top: 5px;
+            /* تحكم في مكان الدائرة */
+            left: 5px;
+            /* تحكم في مكان الدائرة */
+            background-color: var(--main-color);
+            /* لون الدائرة */
+            color:var(--w-color);
+            /* لون النص */
+            width: 20px;
+            /* حجم الدائرة */
+            height: 20px;
+            /* حجم الدائرة */
+            line-height: 20px;
+            /* لضبط النص في المنتصف */
+            text-align: center;
+            border-radius: 50%;
+            /* لجعلها دائرة */
+            font-size: 12px;
+            /* حجم النص داخل الدائرة */
+            font-weight: bold;
+        }
+
+
         .results {
             display: flex;
             flex-wrap: wrap;
@@ -445,6 +484,12 @@ button {
             img {
                 width: 120px;
                 border-radius: 5px;
+            }
+
+            @media (max-width: 786px) {
+                img {
+                    width: 80px;
+                }
             }
         }
 
@@ -467,6 +512,14 @@ button {
                     padding: 7px 15px;
                     border-radius: 5px;
                     margin: 10px;
+                }
+            }
+
+            @media (max-width: 786px) {
+                form {
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 15px;
                 }
             }
         }
