@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Register = require('../models/register');
 const userController = require('../controllers/userController');
 const { uploadImage } = require('../middleware/uploadImage');
 const { ensureDoctorRole, ensureLaboratoryRole, ensureRadiologyRole, ensurePharmacyRole, ensureUserRole } = require('../middleware/roleMiddleware');
@@ -24,6 +23,90 @@ router.post('/reports/:id/report', async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('An error occurred');
+    }
+});
+
+
+const { uploadAnalysisResult } = require('../middleware/analysisResults');
+router.post('/add-analysis-results/:reportId', uploadAnalysisResult, async (req, res) => {
+    const reportId = req.params.reportId; // استخراج الـ reportId من الرابط
+    const uploadedFiles = req.files.map(file => file.filename); // أسماء الملفات المرفوعة
+
+    try {
+        // تحديث التقرير المرتبط
+        const updatedUser = await User.findOneAndUpdate(
+            { "reports._id": reportId }, // البحث عن التقرير باستخدام _id
+            { $push: { "reports.$.analysisResults": { $each: uploadedFiles } } }, // إضافة الصور إلى analysisResults
+            { new: true } // إعادة النتيجة بعد التحديث
+        );
+
+        if (!updatedUser) {
+            return res.status(404).send(`
+                <script>
+                    alert('التقرير غير موجود.');
+                    window.history.back();
+                    </script>
+                    `);
+        }
+
+        // إعادة التوجيه إلى صفحة المستخدم مع إضافة رسالة النجاح في الـ query
+        res.send(`
+                    <script>
+                    alert('تم إضافة نتائج التحاليل بنجاح.');
+                    window.location.href = '/user/${updatedUser._id}?success=تم إضافة نتائج التحاليل بنجاح'; // إعادة التوجيه إلى صفحة المستخدم
+                    </script>
+                    `);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(`
+            <script>
+            alert('حدث خطأ أثناء إضافة الصور.');
+            window.history.back();
+            </script>
+            `);
+    }
+});
+
+
+const { uploadRadiologyResult } = require('../middleware/radiologyResults');
+router.post('/add-radiology-results/:reportId', uploadRadiologyResult, async (req, res) => {
+    const reportId = req.params.reportId; // استخراج الـ reportId من الرابط
+    const uploadedFiles = req.files.map(file => file.filename); // أسماء الملفات المرفوعة
+
+    try {
+        // تحديث التقرير المرتبط
+        const updatedUser = await User.findOneAndUpdate(
+            { "reports._id": reportId }, // البحث عن التقرير باستخدام _id
+            { $push: { "reports.$.radiologyResults": { $each: uploadedFiles } } }, // إضافة الصور إلى radiologyResults
+            { new: true } // إعادة النتيجة بعد التحديث
+        );
+
+        if (!updatedUser) {
+            return res.status(404).send(`
+                <script>
+                    alert(' غير موجود.');
+                    window.history.back();
+                </script>التقرير
+            `);
+        }
+
+        // إعادة التوجيه إلى صفحة المستخدم مع إضافة رسالة النجاح في الـ query
+        res.send(`
+            <script>
+                alert('تم إضافة نتائج الآشعة بنجاح.');
+                window.location.href = '/user/${updatedUser._id}?success=تم إضافة نتائج التحاليل بنجاح'; // إعادة التوجيه إلى صفحة المستخدم
+            </script>
+        `);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(`
+            <script>
+                alert('حدث خطأ أثناء إضافة نتائج الآشعة.');
+                window.history.back();
+            </script>
+        `);
     }
 });
 

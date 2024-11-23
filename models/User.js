@@ -1,19 +1,20 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
+// Schema للتقارير
 const reportsSchema = new Schema({
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // لكل تقرير معرف فريد
     report: String,
     rays: String,
     analysis: String,
-    analysisImage: String,
+    analysisResults: [String], // لتخزين أسماء صور التحاليل
+    radiologyResults: [String],
     Prescription: String,
     doctorName: String
-},
-    { timestamps: true }, { _id: false });
+}, { timestamps: true });
 
-
-const articleSchema = new Schema({
+// Schema المستخدم
+const userSchema = new Schema({
     fullName: String,
     nationalityId: Number,
     birthday: String,
@@ -26,13 +27,8 @@ const articleSchema = new Schema({
     job: String,
     blood: String,
     healthy: String,
-    reports: [reportsSchema],
-},
-    { timestamps: true }
-)
+    reports: [reportsSchema], // مجموعة التقارير
+}, { timestamps: true });
 
-// Create a model based on that schema
-const User = mongoose.model("User", articleSchema);
-
-// export the model
+const User = mongoose.model("User", userSchema);
 module.exports = User;

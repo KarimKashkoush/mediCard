@@ -10,6 +10,54 @@
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/style/all.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <style>
+        .thumbnail {
+            max-width: 150px;
+            max-height: 150px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .image-modal {
+            display: none;
+            /* مخفي افتراضيًا */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--main-color);
+        }
+    </style>
 </head>
 
 <body>
@@ -81,6 +129,8 @@
 
     </section>
 
+
+
     <section class="report-view">
 
         <section class="container">
@@ -90,59 +140,131 @@
 
             <% object.reports.slice().reverse().forEach((element, index)=> { %>
                 <section class="reports-view">
-                    <% if (role !=='users' ) { %>
-                        <section class="report-top">
-                            <% if (role=='Laboratory' ) { %>
-                                <button>اضافة نتائج التحاليل</button>
-                                <% } %>
-                                    <% if (role=='radiology' ) { %>
-                                        <button>اضافة نتائج الاشعة</button>
-                                        <% } %>
-                                            <% if (role=='Pharmacy' ) { %>
-                                                <button>صرف الادوية</button>
-                                                <% } %>
+                    <section class="report">
+                        <h3>التقرير الطبي:</h3>
+                        <p dir="auto">
+                            <%= element.report %>
+                        </p>
+                    </section>
+                    <section class="rays">
+                        <h3>الآشعة:</h3>
+                        <p dir="auto">
+                            <%= element.rays %>
+                        </p>
+
+                        <h4>نتائج الآشعة:</h4>
+                        <br>
+                        <section class="results">
+                            <% if (element.radiologyResults && element.radiologyResults.length> 0) { %>
+                                <% element.radiologyResults.forEach(function(image) { %>
+                                    <img src="/results/<%= image %>" alt="نتيجة الآشعة" class="thumbnail" />
+                                    <% }); %>
+                                        <% } else { %>
+                                            <p>لا يوجد نتائج حتى الآن</p>
+                                            <% } %>
                         </section>
 
-                        <% } %>
-                            <section class="report">
-                                <h3>التقرير الطبي:</h3>
-                                <p dir="auto">
-                                    <%= element.report %>
-                                </p>
-                            </section>
-                            <section class="rays">
-                                <h3>الآشعة:</h3>
-                                <p dir="auto">
-                                    <%= element.rays %>
-                                </p>
-                            </section>
-                            <section class="analysis">
-                                <h3>التحاليل الطبية:</h3>
-                                <p dir="auto">
-                                    <%= element.analysis %>
-                                </p>
-                            </section>
-                            <section class="prescription">
-                                <h3>الأدوية:</h3>
-                                <p dir="auto">
-                                    <%= element.Prescription %>
-                                </p>
-                            </section>
-                            <section class="report-bottom">
-                                <h3>رقم التقرير: <%= object.reports.length - index %>
-                                </h3>
-                                <h3>د/ <%= element.doctorName %>
-                                </h3>
-                                <h3>تاريخ التقرير: <%= moment(element.createdAt).format('MMMM Do YYYY, h:mm:ss a') %>
-                                </h3>
-                            </section>
+                        <% if (role !=='users' ) { %>
+                            <% if (role=='radiology' ) { %>
+                                <section class="form-results">
+                                    <form action="/add-radiology-results/<%= element._id %>" method="POST"
+                                        enctype="multipart/form-data">
+                                        <input type="file" name="radiologyResults" id="radiologyResults"
+                                            accept="image/*" multiple>
+                                        <button type="submit" class="btn">رفع الصور</button>
+                                    </form>
+                                </section>
+                                <% } %>
+                                    <% } %>
+                    </section>
+                    <section class="analysis">
+                        <h3>التحاليل الطبية:</h3>
+                        <p dir="auto">
+                            <%= element.analysis %>
+                        </p>
+
+                        <h4>نتائج التحاليل الطبية:</h4>
+                        <br>
+                        <section class="results">
+                            <% if (element.analysisResults && element.analysisResults.length> 0) { %>
+                                <% element.analysisResults.forEach(function(image) { %>
+                                    <img src="/results/<%= image %>" alt="نتيجة تحليل" class="thumbnail" />
+                                    <% }); %>
+                                        <% } else { %>
+                                            <p>لا يوجد نتائج حتى الآن</p>
+                                            <% } %>
+                        </section>
+
+
+                        <!-- نافذة الصورة الكبيرة -->
+                        <div id="imageModal" class="image-modal">
+                            <span class="close-modal">&times;</span>
+                            <img class="modal-content" id="modalImage" />
+                        </div>
+
+
+                        <% if (role !=='users' ) { %>
+                            <% if (role=='Laboratory' ) { %>
+                                <section class="form-results">
+                                    <form action="/add-analysis-results/<%= element._id %>" method="POST"
+                                        enctype="multipart/form-data">
+                                        <input type="file" name="analysisResults" id="analysisResults" accept="image/*"
+                                            multiple>
+                                        <button type="submit" class="btn">رفع الصور</button>
+                                    </form>
+                                </section>
+                                <% } %>
+                                    <% } %>
+                    </section>
+                    <section class="prescription">
+                        <h3>الأدوية:</h3>
+                        <p dir="auto">
+                            <%= element.Prescription %>
+                        </p>
+                    </section>
+                    <section class="report-bottom">
+                        <h3>رقم التقرير: <%= object.reports.length - index %>
+                        </h3>
+                        <h3>د/ <%= element.doctorName %>
+                        </h3>
+                        <h3>تاريخ التقرير: <%= moment(element.createdAt).format('MMMM Do YYYY, h:mm:ss a') %>
+                        </h3>
+                    </section>
 
                 </section>
                 <% }) %>
 
         </section>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeModal = document.querySelector('.close-modal');
 
+            // عند الضغط على صورة مصغرة
+            thumbnails.forEach((thumbnail) => {
+                thumbnail.addEventListener('click', () => {
+                    modal.style.display = 'flex'; // عرض النافذة
+                    modalImage.src = thumbnail.src; // نسخ مصدر الصورة
+                });
+            });
+
+            // إغلاق النافذة عند الضغط على زر الإغلاق
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // إغلاق النافذة عند الضغط على أي مكان خارج الصورة
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+    </script>
     <script src="js/all.js"></script>
     <script src="js/script.js"></script>
 </body>

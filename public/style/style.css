@@ -423,7 +423,7 @@ button {
 .reports-view {
     box-shadow: rgba(46, 84, 99, 0.62) 0px 2px 4px 0px, rgba(63, 104, 122, 0.734) 0px 2px 16px 0px;
     background-color: var(--main-color);
-    padding: 100px 15px;
+    padding: 15px 15px 100px 15px;
     border-radius: 10px;
     margin-bottom: 15px;
     position: relative;
@@ -434,6 +434,42 @@ button {
 
     >section {
         padding-block: 15px;
+
+        .results {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: end;
+            justify-content: center;
+            gap: 10px;
+
+            img {
+                width: 120px;
+                border-radius: 5px;
+            }
+        }
+
+        .form-results {
+            background-color: #fff;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+
+            form {
+                color: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                button {
+                    background-color: var(--main-color);
+                    color: var(--w-color);
+                    padding: 7px 15px;
+                    border-radius: 5px;
+                    margin: 10px;
+                }
+            }
+        }
     }
 
     >section:not(.prescription) {
@@ -441,7 +477,6 @@ button {
     }
 }
 
-.report-top,
 .report-bottom {
     position: absolute;
     min-height: 50px;
@@ -465,10 +500,6 @@ button {
         color: var(--main-color);
         box-shadow: rgba(0, 0, 0, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     }
-}
-
-.report-top {
-    top: 0;
 }
 
 .report-bottom {
