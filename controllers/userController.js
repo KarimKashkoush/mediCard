@@ -3,11 +3,6 @@ const User = require('../models/User');
 const moment = require('moment');
 const qrcode = require('qrcode');
 
-
-
-
-
-
 // تسجيل الدخول
 const login = (req, res) => {
     if (req.session && req.session.userId) {
