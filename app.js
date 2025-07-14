@@ -28,7 +28,7 @@ app.use(express.static('public'));
 app.use(express.static('uploads/images'));
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', allRoutes);
+app.use(allRoutes);
 
 
 
