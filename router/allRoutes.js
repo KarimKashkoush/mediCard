@@ -15,7 +15,7 @@ router.post('/bulk-insert', userController.bulkInsertUsers);
 
 router.post('/api/users', userController.addMultipleUsers);
 
-router.get('/api/dashboard', userController.getDashboardData);
+router.get('/dashboard', userController.getDashboardData);
 
 router.post('/reports/:id/report', async (req, res) => {
     try {
