@@ -10,6 +10,13 @@
 </head>
 
 <body>
+
+    <form action="/upload-csv" method="POST" enctype="multipart/form-data">
+        <input type="file" name="csvfile" accept=".csv" required>
+        <button type="submit">رفع الملف</button>
+    </form>
+
+
     <section class="header">
         <section class="container" style="display: block; text-align: center;">
             <section class="logo">
@@ -139,7 +146,7 @@
     </main>
     <!-- main -->
 
-    
+
     <script src="/js/script.js"></script>
     <script src="/js/all.js"></script>
 </body>

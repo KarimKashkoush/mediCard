@@ -24,54 +24,56 @@
     <section class="dashboard">
         <section class="container">
             <section class="table">
-                <table class="main-table">
+                <%= result.length %>
 
-                    <thead>
-                        <tr>
-                            <th>م</th>
-                            <th>الاسم</th>
-                            <th>الرقم القومي</th>
-                            <th>العمر</th>
-                            <th>السجل الطبي</th>
-                            <th>حذف</th>
-                        </tr>
-                    </thead>
+                    <table class="main-table">
 
-                    <tbody>
-                        <% result.forEach((element, index)=> { %>
+                        <thead>
                             <tr>
-                                <th>
-                                    <%= index + 1 %>
-                                </th>
-                                <td>
-                                    <%= element.fullName %>
-                                </td>
-                                <td>
-                                    <%= element.nationalityId %>
-                                </td>
-                                <td>
-                                    <%= moment().diff( element.birthday , 'years' ) %>
-                                </td>
-                                <td>
-                                    <button class="btn view" id="openForm">
-                                        <a href="/user/<%= element._id %>">
-                                            عرض
-                                        </a>
-                                    </button>
-                                </td>
-                                <td>
-                                    <form action="/<%= element._id %>?_method=DELETE" method="post"
-                                        onsubmit="return confirmDelete()">
-                                        <button class="btn delete" id="openForm">
-                                            حذف
-                                        </button>
-                                    </form>
-                                </td>
+                                <th>م</th>
+                                <th>الاسم</th>
+                                <th>الرقم القومي</th>
+                                <th>العمر</th>
+                                <th>السجل الطبي</th>
+                                <th>حذف</th>
                             </tr>
-                            <% }) %>
-                    </tbody>
+                        </thead>
 
-                </table>
+                        <tbody>
+                            <% result.forEach((element, index)=> { %>
+                                <tr>
+                                    <th>
+                                        <%= index + 1 %>
+                                    </th>
+                                    <td>
+                                        <%= element.fullName %>
+                                    </td>
+                                    <td>
+                                        <%= element.nationalityId %>
+                                    </td>
+                                    <td>
+                                        <%= moment().diff( element.birthday , 'years' ) %>
+                                    </td>
+                                    <td>
+                                        <button class="btn view" id="openForm">
+                                            <a href="/user/<%= element._id %>">
+                                                عرض
+                                            </a>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <form action="/<%= element._id %>?_method=DELETE" method="post"
+                                            onsubmit="return confirmDelete()">
+                                            <button class="btn delete" id="openForm">
+                                                حذف
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+
+                    </table>
             </section>
         </section>
     </section>

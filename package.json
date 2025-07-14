@@ -13,8 +13,10 @@
   "dependencies": {
     "aws-sdk": "^2.1670.0",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^2.2.0",
     "bwip-js": "^4.5.1",
     "connect-mongo": "^5.1.0",
+    "csv-parser": "^3.2.0",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",

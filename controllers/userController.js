@@ -3,6 +3,30 @@ const User = require('../models/User');
 const moment = require('moment');
 const qrcode = require('qrcode');
 
+
+
+const bulkInsertUsers = async (req, res) => {
+    try {
+        const users = req.body;
+
+        // تحقق إن البيانات جاية Array
+        if (!Array.isArray(users)) {
+            return res.status(400).json({ message: 'البيانات لازم تكون Array' });
+        }
+
+        // استخدم insertMany
+        await User.insertMany(users);
+
+        res.status(201).json({ message: 'تم إضافة المستخدمين بنجاح' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'حدث خطأ أثناء الإضافة' });
+    }
+};
+
+
+
+
 // تسجيل الدخول
 const login = (req, res) => {
     if (req.session && req.session.userId) {
@@ -250,4 +274,47 @@ const handleLogout = (req, res) => {
 };
 
 
-module.exports = { home, addMongo, add, view, deleteUser, dashboard, searchResult, doctor, laboratory, radiology, pharmacy, users, login, signup, handleLogin, handleSignup, handleLogout };
+
+
+
+
+const addMultipleUsers = async (req, res) => {
+    try {
+        const usersData = req.body; // استلام مصفوفة من المستخدمين
+
+        // التحقق من وجود الرقم القومي لكل مستخدم قبل الإضافة
+        const existingIds = await User.find({ nationalityId: { $in: usersData.map(user => user.nationalityId) } });
+
+        if (existingIds.length > 0) {
+            return res.status(400).json({
+                message: "بعض الأرقام القومية موجودة بالفعل",
+                existingIds: existingIds.map(user => user.nationalityId)
+            });
+        }
+
+        // إضافة الصور الافتراضية إذا لم تكن موجودة
+        usersData.forEach(user => {
+            user.image = user.image || 'default.jpg';
+        });
+
+        // إدخال البيانات إلى قاعدة البيانات
+        await User.insertMany(usersData);
+
+        res.status(201).json({ message: "تمت إضافة المستخدمين بنجاح!" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "حدث خطأ أثناء إضافة المستخدمين." });
+    }
+};
+
+const getDashboardData = (req, res) => {
+    User.find()
+        .then((data) => { res.json({ data }); }) // يرجع البيانات كـ JSON
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: 'Server Error' });
+        });
+};
+
+
+module.exports = { bulkInsertUsers, getDashboardData, addMultipleUsers, home, addMongo, add, view, deleteUser, dashboard, searchResult, doctor, laboratory, radiology, pharmacy, users, login, signup, handleLogin, handleSignup, handleLogout };

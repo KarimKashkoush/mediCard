@@ -3,8 +3,19 @@ const router = express.Router();
 const User = require('../models/User');
 const userController = require('../controllers/userController');
 const { uploadImage } = require('../middleware/uploadImage');
-const { ensureDoctorRole, ensureLaboratoryRole, ensureRadiologyRole, ensurePharmacyRole, ensureUserRole } = require('../middleware/roleMiddleware');
+const { ensureDoctorRole, ensureLaboratoryRole, ensureRadiologyRole, ensurePharmacyRole } = require('../middleware/roleMiddleware');
 
+
+
+
+
+
+// router
+router.post('/bulk-insert', userController.bulkInsertUsers);
+
+router.post('/api/users', userController.addMultipleUsers);
+
+router.get('/api/dashboard', userController.getDashboardData);
 
 router.post('/reports/:id/report', async (req, res) => {
     try {
@@ -25,7 +36,6 @@ router.post('/reports/:id/report', async (req, res) => {
         res.status(500).send('An error occurred');
     }
 });
-
 
 const { uploadAnalysisResult } = require('../middleware/analysisResults');
 router.post('/add-analysis-results/:reportId', uploadAnalysisResult, async (req, res) => {
@@ -68,7 +78,6 @@ router.post('/add-analysis-results/:reportId', uploadAnalysisResult, async (req,
     }
 });
 
-
 const { uploadRadiologyResult } = require('../middleware/radiologyResults');
 router.post('/add-radiology-results/:reportId', uploadRadiologyResult, async (req, res) => {
     const reportId = req.params.reportId; // استخراج الـ reportId من الرابط
@@ -110,7 +119,6 @@ router.post('/add-radiology-results/:reportId', uploadRadiologyResult, async (re
     }
 });
 
-
 // معالجة تسجيل الدخول
 router.post('/login', userController.handleLogin);
 
@@ -125,7 +133,6 @@ router.get('/login', userController.login);
 
 // عرض صفحة التسجيل
 router.get('/signup', userController.signup);
-
 
 // عرض الصفحة الرئيسية
 router.get('/', userController.home);
@@ -148,14 +155,11 @@ router.get('/radiology', ensureRadiologyRole, userController.radiology);
 // لوحة التحكم
 router.get('/dashboard', userController.dashboard);
 
-
 // إضافة مستخدم إلى قاعدة البيانات
 router.post('/add', uploadImage, userController.addMongo);
 
 // عرض صفحة إضافة مستخدم
 router.get('/add', userController.add);
-
-
 
 // عرض صفحة إضافة مستخدم
 router.get('/add', userController.add);
