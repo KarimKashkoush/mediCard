@@ -249,5 +249,19 @@ const handleLogout = (req, res) => {
     }
 };
 
+const getUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
 
-module.exports = { home, addMongo, add, view, deleteUser, dashboard, searchResult, doctor, laboratory, radiology, pharmacy, users, login, signup, handleLogin, handleSignup, handleLogout };
+        if (!user) {
+            return res.status(404).json({ message: "المستخدم غير موجود" });
+        }
+
+        res.status(200).json([user]); // هنا بنرجع البيانات في Array
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "حدث خطأ في الخادم" });
+    }
+};
+
+module.exports = {getUser, home, addMongo, add, view, deleteUser, dashboard, searchResult, doctor, laboratory, radiology, pharmacy, users, login, signup, handleLogin, handleSignup, handleLogout };
