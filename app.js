@@ -1,14 +1,15 @@
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const mongoose = require('mongoose');
-const allRoutes = require('./router/allRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+const User = require('./models/User');
+const Register = require('./models/register');
+const userController = require('./controllers/userController');
+const allRoutes = require('./router/allRoutes');
 
-app.use(express.json());
-
-// لو مش محتاج sessions، تقدر تلغي الجزء ده تمامًا
 app.use(session({
     secret: 'aVery$trongS3cretKey@2024',
     resave: false,
@@ -23,10 +24,17 @@ app.use(session({
     }
 }));
 
-// ❗ الربط بالرابط /api/...
-app.use('/api', allRoutes);
+app.use(methodOverride('_method'));
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(express.static('uploads/images'));
+app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb+srv://karimkashkoush5:HwYhzwUk9eXJsQ9s@cluster0.an64b.mongodb.net/')
+app.use(allRoutes);
+
+
+
+mongoose.connect("mongodb+srv://karimkashkoush5:HwYhzwUk9eXJsQ9s@cluster0.an64b.mongodb.net/")
     .then(() => {
         app.listen(port, () => {
             console.log(`Server running at http://localhost:${port}`);
