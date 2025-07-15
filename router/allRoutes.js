@@ -111,7 +111,7 @@ router.post('/add-radiology-results/:reportId', uploadRadiologyResult, async (re
 });
 
 
-router.get('/api/user/:id', controller.getUser);
+router.get('/api/user/:id', userController.getUser);
 
 // معالجة تسجيل الدخول
 router.post('/login', userController.handleLogin);
